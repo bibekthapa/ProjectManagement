@@ -13,29 +13,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  *
  * @author HOME
  */
-public class ClientDaoImpl implements ClientDao{
-  // ClientDao clientdao=new ClientDaoImpl();
+public class ClientDaoImpl implements ClientDao {
+
+    DbConnection db = new DbConnection();
 
     @Override
     public List<Clients> getAll() throws ClassNotFoundException, SQLException {
-               Clients client=new Clients();
-             
-                List<Clients> clientlst=new ArrayList<Clients>();
-                client.setClient_id(1);
-                client.setClient_name("Ram");
-                client.setClient_description("Android Enterprizes");
-                clientlst.add(client);
+        List<Clients> clientlst = new ArrayList<Clients>();
+        
+        
+        db.open();
+        String sql = "SELECT * FROM clients";
+        db.initStatement(sql);
+        ResultSet rs = db.executeQuery();
+       
+
+        while (rs.next()) {
+             Clients client = new Clients();//clients should be instantiated over here
             
-                return clientlst;
-            }
-            
-           
-    
-   
-    
+            client.setClient_id(rs.getInt("client_id"));
+            client.setClient_name(rs.getString("client_name"));
+            client.setClient_description(rs.getString("client_description"));
+            clientlst.add(client);
+
+        }
+        return clientlst;
+        
+       
+    }
+
 }

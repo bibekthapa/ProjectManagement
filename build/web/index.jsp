@@ -30,25 +30,20 @@
             </tr>
            
                 <%
-                    DbConnection db=new DbConnection();
-                     db.open();
-                     String sql="SELECT * FROM clients";
-                    db.initStatement(sql);
                    
-                     ResultSet rs=db.executeQuery();
                     
                   
                    
                    
-                   //ClientDao clientdao=new ClientDaoImpl();
-                   //for(Clients c : clientdao.getAll()){
+                   ClientDao clientdao=new ClientDaoImpl();
+                   for(Clients c : clientdao.getAll()){
                    
-                   while(rs.next()){
+                  
                 %>
                  <tr>
-                <td><%out.println(rs.getInt("client_id"));%></td>
-            <td><%out.println(rs.getString("client_name"));%></td>
-            <td><%out.println(rs.getString("client_description"));%></td>
+                <td><%out.println(c.getClient_id());%></td>
+            <td><%out.println(c.getClient_name());%></td>
+            <td><%out.println(c.getClient_description());%></td>
             
             <%}%>
             </tr>
